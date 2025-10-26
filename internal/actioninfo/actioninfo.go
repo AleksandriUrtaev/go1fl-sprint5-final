@@ -1,9 +1,28 @@
 package actioninfo
 
+import (
+	"fmt"
+)
+
 type DataParser interface {
-	// TODO: добавить методы
+	Parse(data string) error
+	ActionInfo() (string, error)
 }
 
 func Info(dataset []string, dp DataParser) {
-	// TODO: реализовать функцию
+
+	for _, r := range dataset {
+
+		err := dp.Parse(r)
+		if err != nil {
+			fmt.Println("ошибка:", err)
+			continue
+		}
+		str, err := dp.ActionInfo()
+		if err != nil {
+			fmt.Println("ошибка:", err)
+			continue
+		}
+		print(str)
+	}
 }
