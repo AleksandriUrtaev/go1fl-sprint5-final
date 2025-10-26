@@ -27,16 +27,15 @@ func (t *Training) Parse(datastring string) (err error) {
 		parts = append(parts, v)
 	}
 	if len(parts) != 3 {
-		return errors.New("Неверное количество аргументов")
+		return errors.New("неверное количество аргументов")
 	}
 	Steps, err := strconv.Atoi(parts[0])
 	if err != nil {
-		err := errors.New("Ошибка преобразования.")
 		return err
 	}
 
 	if Steps <= 0 {
-		return errors.New("Количество шагов должно быть больше 0.")
+		return errors.New("количество шагов должно быть больше 0")
 	}
 
 	t.Steps = Steps
@@ -45,11 +44,10 @@ func (t *Training) Parse(datastring string) (err error) {
 
 	td, err := time.ParseDuration(parts[2])
 	if err != nil {
-		err := errors.New("Ошибка преобразования.")
 		return err
 	}
 	if td <= 0 {
-		return errors.New("Продолжительность должна быть больше 0.")
+		return errors.New("продолжительность должна быть больше 0")
 	}
 	t.Duration = td
 
@@ -61,30 +59,30 @@ func (t Training) ActionInfo() (string, error) {
 	dist := spentenergy.Distance(t.Steps, t.Personal.Height)
 
 	if dist <= 0 {
-		return "", errors.New("Дистанция <=0")
+		return "", errors.New("дистанция <=0")
 	}
 
 	aspeed := spentenergy.MeanSpeed(t.Steps, t.Height, t.Duration)
 
 	if aspeed <= 0 {
-		return "", errors.New("Средняя скорость <=0")
+		return "", errors.New("средняя скорость <=0")
 	}
-	var SpentCal float64
+	var spentcal float64
 	var err error
 	toa := t.TrainingType
 	switch toa {
 
 	case "Бег":
-		SpentCal, err = spentenergy.RunningSpentCalories(t.Steps, t.Weight, t.Height, t.Duration)
+		spentcal, err = spentenergy.RunningSpentCalories(t.Steps, t.Weight, t.Height, t.Duration)
 	case "Ходьба":
-		SpentCal, err = spentenergy.WalkingSpentCalories(t.Steps, t.Weight, t.Height, t.Duration)
+		spentcal, err = spentenergy.WalkingSpentCalories(t.Steps, t.Weight, t.Height, t.Duration)
 	default:
 		return "", errors.New("неизвестный тип тренировки")
 	}
 
 	if err != nil {
-		log.Println("Ошибка:", err)
-		return "", errors.New("ошибка получения значения сожженых калорий.")
+		log.Println("ошибка:", err)
+		return "", errors.New("ошибка получения значения сожженых калорий")
 	}
 
 	return fmt.Sprintf(`Тип тренировки: %s
@@ -97,6 +95,6 @@ func (t Training) ActionInfo() (string, error) {
 		t.Duration.Hours(),
 		dist,
 		aspeed,
-		SpentCal), nil
+		spentcal), nil
 
 }

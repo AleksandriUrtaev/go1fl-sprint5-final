@@ -16,19 +16,19 @@ const (
 func WalkingSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
 
 	if duration <= 0 {
-		return 0, errors.New("Продолжительнось duration <=0")
+		return 0, errors.New("продолжительнось duration <=0")
 	}
 
 	if steps <= 0 {
-		return 0, errors.New("Количество шагов <=0.")
+		return 0, errors.New("количество шагов <=0")
 	}
 
 	if weight <= 0 {
-		return 0, errors.New("Масса <=0.")
+		return 0, errors.New("масса <=0")
 	}
 
 	if height <= 0 {
-		return 0, errors.New("Рост <=0.")
+		return 0, errors.New("рост <=0")
 	}
 
 	ms := MeanSpeed(steps, height, duration)
@@ -40,19 +40,19 @@ func WalkingSpentCalories(steps int, weight, height float64, duration time.Durat
 func RunningSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
 
 	if duration <= 0 {
-		return 0, errors.New("Продолжительнось duration <=0")
+		return 0, errors.New("продолжительнось duration <=0")
 	}
 
 	if steps <= 0 {
-		return 0, errors.New("Количество шагов <=0.")
+		return 0, errors.New("количество шагов <=0")
 	}
 
 	if weight <= 0 {
-		return 0, errors.New("Масса <=0.")
+		return 0, errors.New("масса <=0")
 	}
 
 	if height <= 0 {
-		return 0, errors.New("Рост <=0.")
+		return 0, errors.New("рост <=0")
 	}
 
 	ms := MeanSpeed(steps, height, duration)
@@ -79,6 +79,6 @@ func Distance(steps int, height float64) float64 {
 
 	stepLength := height * stepLengthCoefficient
 
-	return float64(steps) * stepLength / float64(mInKm)
+	return float64(steps) * stepLength / mInKm
 
 }

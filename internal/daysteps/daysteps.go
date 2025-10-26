@@ -22,22 +22,29 @@ func (ds *DaySteps) Parse(datastring string) (err error) {
 
 	parts := strings.Split(datastring, ",")
 	if len(parts) != 2 {
-		return errors.New("Ошибка преобразования.")
+		return errors.New("ошибка преобразования")
 	}
 
 	stepStr := parts[0]
-	if strings.TrimSpace(stepStr) != stepStr {
-		return errors.New("Неверный формат шагов")
-	}
+	//if strings.TrimSpace(stepStr) != stepStr {
+	//	return errors.New("Неверный формат шагов")
+	//}
 
 	ds.Steps, err = strconv.Atoi(stepStr)
-	if err != nil || ds.Steps <= 0 {
-		return errors.New("Ошибка преобразования шагов")
+	if err != nil {
+		return errors.New("ошибка преобразования шагов")
+	}
+	if ds.Steps <= 0 {
+		return errors.New("количество шагов должно быть больше 0")
 	}
 
 	ds.Duration, err = time.ParseDuration(strings.TrimSpace(parts[1]))
-	if err != nil || ds.Duration <= 0 {
-		return errors.New("Ошибка преобразования длительности.")
+	if err != nil {
+		return errors.New("ошибка преобразования длительности")
+	}
+
+	if ds.Duration <= 0 {
+		return errors.New("длительность должна быть больше 0")
 	}
 
 	return nil
@@ -50,7 +57,7 @@ func (ds DaySteps) ActionInfo() (string, error) {
 
 	cal, err := spentenergy.WalkingSpentCalories(ds.Steps, ds.Weight, ds.Height, ds.Duration)
 	if err != nil {
-		log.Println("Ошибка расчёта калорий:", err)
+		log.Println("ошибка расчёта калорий:", err)
 		return "", err
 	}
 
